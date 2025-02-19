@@ -5,7 +5,7 @@ function Join() {
   const [isLogin, setIsLogin] = useState(true);
 
   return (
-    <div className="pt-20">
+    <div className="pt-20 min-h-screen">
       <main className="container mx-auto my-10 px-4 flex justify-center">
         <div className="bg-white p-8 shadow-lg rounded w-full max-w-md">
           <h2 className="text-2xl font-bold mb-6 text-center">

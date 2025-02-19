@@ -1,9 +1,11 @@
 import { Link, NavLink } from "react-router-dom";
 import logo from "../assets/logo.png";
 
-function Header() {
+function Header({ colorepage }) {
   return (
-    <header className="bg-blue-600 text-white py-4 px-6 fixed top-0 left-0 w-full shadow-lg z-50 flex items-center justify-between">
+    <header
+      className={`${colorepage} text-white py-4 px-6 fixed top-0 left-0 w-full shadow-lg z-50 flex items-center justify-between`}
+    >
       <div className="flex items-center">
         <Link to="/">
           <img src={logo} alt="Logo" className="h-10 mr-4" />

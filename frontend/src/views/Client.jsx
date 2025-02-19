@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Client() {
   const client = {
     name: "John Doe",
@@ -35,9 +37,11 @@ function Client() {
           <h3 className="text-xl font-bold">{client.name}</h3>
           <p className="text-gray-600">@{client.username}</p>
           <p className="text-gray-600">{client.email}</p>
-          <button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded shadow">
-            Go to Settings
-          </button>
+          <Link to="/Settings">
+            <button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded shadow">
+              Go to Settings
+            </button>
+          </Link>
         </div>
 
         <div className="mt-6 space-y-4 max-w-2xl mx-auto">
