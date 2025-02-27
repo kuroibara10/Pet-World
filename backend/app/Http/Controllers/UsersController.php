@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\UsersResource;
 use App\Models\Users;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class UsersController extends Controller
@@ -36,7 +37,7 @@ class UsersController extends Controller
             'prenom' => $request->prenom,
             'username' => $request->username,
             'email' => $request->email,
-            'password' => $request->password,
+            'password' => Hash::make($request->password),
         ]);
         return response()->json(
             [

@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 function Births() {
   const products = Array.from({ length: 40 }, (_, i) => ({
     id: i + 1,
@@ -5,6 +7,9 @@ function Births() {
     price: `$${(Math.random() * 100).toFixed(2)}`,
     image: "https://via.placeholder.com/150",
   }));
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="pt-10">

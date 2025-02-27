@@ -1,4 +1,10 @@
+import { useEffect } from "react";
+
 const Dashbord = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="bg-green-100 min-h-screen text-left">
       {/* Header */}

@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products',function(Blueprint $table){
+        Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->string('description')->unique();
-            $table->float('prix')->unique();
-            $table->integer('quantity')->unique();
-            $table->string('image')->default('public/product/product.png')->change();
-            $table->enum('suitable', ['dogs','cats','births','fishs'])->unique();
-            $table->enum('type', ['food','accessoir'])->unique();
+            $table->text('description'); 
+            $table->decimal('prix', 10, 2); 
+            $table->integer('quantity'); 
+            $table->string('image')->default('public/product/product.png');
+            $table->enum('suitable', ['dogs', 'cats', 'birds', 'fishes']); 
+            $table->enum('type', ['food', 'accessory']);
             $table->boolean('discount_status')->default(false);
             $table->integer('discount_percentage')->nullable();    
             $table->timestamps();
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('products'); // حذف الجدول عند التراجع عن الترحيل
     }
 };

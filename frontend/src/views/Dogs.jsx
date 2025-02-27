@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+// import axios from "axios";
+
 function Dogs() {
   const products = Array.from({ length: 40 }, (_, i) => ({
     id: i + 1,
@@ -5,7 +8,22 @@ function Dogs() {
     price: `$${(Math.random() * 100).toFixed(2)}`,
     image: "https://via.placeholder.com/150",
   }));
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  // const [products, setProducts] = useState([]);
+  // useEffect(() => {
+  //   const fetchUsers = async () => {
+  //     try {
+  //       const response = await axios.get("http://localhost:8000/api/products");
+  //       setProducts(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching users:", error);
+  //     }
+  //   };
+  //   fetchUsers();
+  // }, []);
+  // const typepet = products.data.filter((pet)=> pet.type === type)
   return (
     <div className="pt-10">
       <main className="container mx-auto my-10 px-4">

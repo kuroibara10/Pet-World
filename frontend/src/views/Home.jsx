@@ -1,11 +1,29 @@
 import { Link } from "react-router-dom";
 import photo_welcom from "../assets/welcom.png";
+import { useEffect } from "react";
+// import axios from "axios";
+
 function Home() {
   const backgroundImageUrl = photo_welcom;
   let listPetAnimals = ["dogs", "cats", "births", "fishs"];
+  // const [products, setProducts] = useState([]);
   const capitalizeFirstCharacter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  // useEffect(() => {
+  //   const fetchUsers = async () => {
+  //     try {
+  //       const response = await axios.get("http://localhost:8000/api/products");
+  //       setProducts(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching users:", error);
+  //     }
+  //   };
+  //   fetchUsers();
+  // }, []);
 
   return (
     <div>
