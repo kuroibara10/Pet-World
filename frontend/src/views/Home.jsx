@@ -1,29 +1,30 @@
 import { Link } from "react-router-dom";
 import photo_welcom from "../assets/welcom.png";
-import { useEffect } from "react";
-// import axios from "axios";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function Home() {
   const backgroundImageUrl = photo_welcom;
-  let listPetAnimals = ["dogs", "cats", "births", "fishs"];
-  // const [products, setProducts] = useState([]);
+  let listPetAnimals = ["dogs", "cats", "birds", "fishes"];
+  const [products, setProducts] = useState([]);
+
   const capitalizeFirstCharacter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  // useEffect(() => {
-  //   const fetchUsers = async () => {
-  //     try {
-  //       const response = await axios.get("http://localhost:8000/api/products");
-  //       setProducts(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching users:", error);
-  //     }
-  //   };
-  //   fetchUsers();
-  // }, []);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/api/products");
+        setProducts(response.data);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+    fetchProducts();
+  }, []);
 
   return (
     <div>
@@ -48,29 +49,78 @@ function Home() {
             <h2 className="text-2xl font-semibold mb-4">
               {capitalizeFirstCharacter(section)}
             </h2>
-            <div className="overflow-x-auto scrollbar-hide">
-              <div className="flex space-x-4 w-max">
-                {[1, 2, 3, 4, 5, 6, 7, 8].map((product) => (
-                  <div
-                    key={product}
-                    className="bg-white p-4 shadow rounded text-center min-w-[250px]"
-                  >
-                    <img
-                      src="https://via.placeholder.com/150"
-                      alt={`Product ${product}`}
-                      className="w-full h-40 object-cover mb-2 rounded"
-                    />
-                    <h3 className="text-lg font-semibold">Product {product}</h3>
-                    <p className="text-blue-600 font-bold">$99.99</p>
-                  </div>
-                ))}
+            <div className="overflow-x-auto scrollbar-small bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow duration-300">
+              {/* <div className="flex space-x-4 w-max">
+                {products?.data
+                  ? products.data
+                      .filter((product) => product.suitable === section)
+                      .slice(0, 6)
+                      .map((product) => (
+                        <div
+                          key={product}
+                          className="bg-white p-4 shadow rounded text-center min-w-[250px]"
+                        >
+                          <img
+                            src={product.image}
+                            alt={`Product ${product.image}`}
+                            className="w-full h-40 object-cover mb-2 rounded"
+                          />
+                          <h3 className="text-lg font-semibold">
+                            Product {product.name}
+                          </h3>
+                          <p className="text-blue-600 font-bold">
+                            {product.prix}
+                          </p>
+                          <p className="text-blue-600 font-bold">
+                            {product.suitable}
+                          </p>
+                        </div>
+                      ))
+                  : "Loading"}
+              </div> */}
+              <div className="overflow-x-auto scrollbar-hide">
+                <div className="flex space-x-6 w-max py-4">
+                  {products?.data ? (
+                    products.data
+                      .filter((product) => product.suitable === section)
+                      .slice(0, 5)
+                      .map((product) => (
+                        <div
+                          key={product.id}
+                          className="bg-white p-5 shadow-lg rounded-xl text-center min-w-[250px] transform transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+                        >
+                          {product.image ? (
+                            <img
+                              src={`http://localhost:8000/storage/${product.image}`}
+                              // src={product.image}
+                              alt={`Product ${product.name}`}
+                              className="w-full h-40 object-cover mb-3 rounded-xl"
+                            />
+                          ) : (
+                            <p>Loading image...</p>
+                          )}
+                          <h3 className="text-lg font-semibold text-gray-800">
+                            {product.name}
+                          </h3>
+                          <p className="text-blue-600 font-bold text-xl">
+                            {product.prix} DH
+                          </p>
+                          <p className="text-gray-500 text-sm mt-1">
+                            {product.suitable}
+                          </p>
+                        </div>
+                      ))
+                  ) : (
+                    <p className="text-gray-500 text-lg">Loading...</p>
+                  )}
+                </div>
               </div>
             </div>
             <Link
-              to={`/${section}`}
-              className="block text-center mt-4 text-blue-600"
+              to={`/products/${section}`}
+              className="block text-center mt-6 text-blue-600 font-medium hover:underline"
             >
-              View all products {capitalizeFirstCharacter(section)}
+              View all {capitalizeFirstCharacter(section)}
             </Link>
           </section>
         ))}

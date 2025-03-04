@@ -4,6 +4,7 @@ import axios from "axios";
 function Dashboard() {
   const [users, setUsets] = useState([]);
   const [products, setProducts] = useState([]);
+  const [demands, setDemands] = useState([]);
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/userss")
@@ -15,6 +16,12 @@ function Dashboard() {
     axios
       .get("http://localhost:8000/api/products")
       .then((response) => setProducts(response.data))
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/demands")
+      .then((response) => setDemands(response.data))
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
@@ -35,12 +42,14 @@ function Dashboard() {
           </p>
         </div>
         <div>
-          <h3>Sales</h3>
-          <p className="text-3xl font-bold">$12,345</p>
+          <h3>Orders</h3>
+          <p className="text-3xl font-bold">
+            {demands?.data ? demands.data.length : "Loading..."}
+          </p>
         </div>
         <div>
-          <h3>Orders</h3>
-          <p className="text-3xl font-bold">567</p>
+          <h3>Sales</h3>
+          <p className="text-3xl font-bold">$12,345</p>
         </div>
       </div>
     </div>

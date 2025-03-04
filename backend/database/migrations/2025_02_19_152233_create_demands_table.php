@@ -11,15 +11,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Schema::create('demands',function(Blueprint $table){
-        //     $table->id();
-        //     $table->json('nameProducts');
-        //     $table->json('prixProducts');
-        //     $table->string('Demandeur');
-        //     $table->enum('statue', ['Under_preparation', 'in_the_way', 'success', 'reject'])->default('Under_preparation');
-        //     $table->date('dateFinish')->nullable();
-        //     $table->timestamps();
-        // });
 
         Schema::create('demands', function (Blueprint $table) {
             $table->id();

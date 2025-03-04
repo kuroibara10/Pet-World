@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ProductsResource;
-use App\Models\Products;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class ProductsController extends Controller
 {
     public function index(){
-        $product = Products::get();
+        $product = Product::get();
         if($product->count()>0){
             return ProductsResource::collection($product);
         }else{
@@ -19,7 +19,7 @@ class ProductsController extends Controller
     }
     // public function store(Request $request){}
     public function show($id){
-        $product = Products::findOrFail($id);
+        $product = Product::findOrFail($id);
         if ($product){
             return new ProductsResource($product);
         }else{
@@ -44,7 +44,7 @@ class ProductsController extends Controller
         $validatedData['image'] = $request->file('image')->store('public/products');
     }
 
-    $product = Products::create($validatedData);
+    $product = Product::create($validatedData);
 
     return response()->json($product, 201);
 }
@@ -52,7 +52,7 @@ class ProductsController extends Controller
 
     public function update(Request $request, $id)
     {
-        $product = Products::findOrFail($id);
+        $product = Product::findOrFail($id);
         $data = $request->all();
         if ($request->hasFile('image')) {
             Storage::delete($product->image);
@@ -64,7 +64,7 @@ class ProductsController extends Controller
 
     // public function update(Request $request, $id){}
     public function destroy($id){
-        $product = Products::findOrfail($id);
+        $product = Product::findOrfail($id);
         if($product){
             $product->delete();
             return response()->json(

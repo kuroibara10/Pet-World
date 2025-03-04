@@ -1,4 +1,4 @@
-#root {
+/* #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
@@ -39,4 +39,32 @@
 
 .read-the-docs {
   color: #888;
+} */
+
+/* تخصيص حجم الـ scrollbar في متصفحات Webkit (Chrome, Safari) */
+.scrollbar-small::-webkit-scrollbar {
+  width: 6px; /* لجعل الـ scrollbar أصغر */
+  height: 6px; /* لجعل الـ scrollbar أصغر أفقيًا */
+}
+
+/* تخصيص شكل الـ scrollbar */
+.scrollbar-small::-webkit-scrollbar-thumb {
+  background-color: #888; /* اللون الأساسي للـ thumb */
+  border-radius: 10px; /* جعل الحواف مدورة */
+}
+
+/* تخصيص حالة التمرير عند التفاعل مع الـ thumb */
+.scrollbar-small::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* تغيير اللون عند التمرير */
+}
+img {
+  transition: filter 0.3s ease;
+}
+.active-link img {
+  filter: brightness(0) saturate(100%) invert(20%) sepia(100%) saturate(400%)
+    hue-rotate(180deg);
+}
+.active-link {
+  color: #ff6347; /* مثال: لون برتقالي */
+  text-decoration: underline; /* إضافة خط تحت النص */
 }

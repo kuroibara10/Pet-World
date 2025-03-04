@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\MessagesResource;
-use App\Models\Messages;
+use App\Models\Message;
 use Illuminate\Http\Request;
 
 class MessagesController extends Controller
 {
     public function index(){
-        $message = Messages::get();
+        $message = Message::get();
         if($message->count()>0){
             return MessagesResource::collection($message);
         }else{
@@ -18,7 +18,7 @@ class MessagesController extends Controller
     }
     public function store(Request $request){}
     public function show($id){
-        $message = Messages::findOrFail($id);
+        $message = Message::findOrFail($id);
         if ($message){
             return new MessagesResource($message);
         }else{
@@ -27,7 +27,7 @@ class MessagesController extends Controller
     }
     public function update(Request $request, $id){}
     public function destroy($id){
-        $message = Messages::findOrfail($id);
+        $message = Message::findOrfail($id);
         if($message){
             $message->delete();
             return response()->json(

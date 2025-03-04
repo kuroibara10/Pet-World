@@ -6,22 +6,28 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
+use Laravel\Sanctum\HasApiTokens; 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasApiTokens,HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
+    use HasFactory;
+    protected $table = "users";
     protected $fillable = [
         'name',
+        'prenom',
+        'username',
         'email',
         'password',
-    ];
+        'photo',
+        'role',
+    ];  
 
     /**
      * The attributes that should be hidden for serialization.
@@ -45,4 +51,17 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+        // ✅ عند جلب قيمة `photo`، إذا كانت فارغة، قم بإرجاع الصورة الافتراضية
+        public function getPhotoAttribute($value)
+        {
+            return $value ? asset('storage/' . $value) : asset('storage/users/user.png');
+        }
+        
+        // ✅ عند حفظ مستخدم جديد، إذا لم يتم إرسال `photo`، يتم تعيين الصورة الافتراضية
+        public function setPhotoAttribute($value)
+        {
+            $this->attributes['photo'] = $value ?: 'users/user.png';
+        }    
+    
 }

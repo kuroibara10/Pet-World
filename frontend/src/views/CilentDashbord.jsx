@@ -2,16 +2,16 @@ import { useEffect, useState } from "react";
 import Client from "../components/Clients/Client";
 import Settings from "../components/Clients/Settings";
 import Demands from "../components/Clients/Demands";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import axios from "axios";
 
-export default function CilentDashbord() {
+export default function CilentDashbord({ id }) {
   const [activeSection, setActiveSection] = useState("dashboard");
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   const [userInfo, setUserInfo] = useState([]);
-  const { id } = useParams(); // الحصول على ID من الرابط
+  // const { id } = useParams(); // الحصول على ID من الرابط
   useEffect(() => {
     // جلب معلومات المستخدم بناءً على ID
     const fetchUserInfo = async () => {

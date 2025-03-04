@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import Register from "../components/Register";
 import { Link } from "react-router-dom";
 import logo from "../assets/Pet_World.png";
-import Login from "../components/login";
+import Login from "../components/Login";
 
-function Join({ setIslog, setRoleuser, setId }) {
+function Join({ islog, setIslog, setRoleuser, setId }) {
   const [isLogin, setIsLogin] = useState(true);
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -27,6 +27,7 @@ function Join({ setIslog, setRoleuser, setId }) {
               setIslog={setIslog}
               setRoleuser={setRoleuser}
               setId={setId}
+              islog={islog}
             />
           ) : (
             <Register setIsLogin={setIsLogin} />

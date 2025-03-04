@@ -1,12 +1,8 @@
-// import "./App.css";
+import "./App.css";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Home from "./views/Home";
 import Join from "./views/Join";
 import Products from "./views/Products";
-import Cats from "./views/Cats";
-import Dogs from "./views/Dogs";
-import Fishs from "./views/Fishs";
-import Births from "./views/Births";
 import About from "./views/About";
 import Contacts from "./views/Contacts";
 import Dashbord from "./views/Dashbord";
@@ -16,6 +12,7 @@ import Footer from "./components/Footer";
 import AdminDashboard from "./views/Admindashboard";
 import CilentDashbord from "./views/CilentDashbord";
 import { useState } from "react";
+import ProductsPet from "./views/ProductPet";
 
 function App() {
   const location = useLocation();
@@ -38,7 +35,13 @@ function App() {
           roleu={roleu}
         />
       ) : (
-        <Header colorepage={coloreclient} />
+        <Header
+          colorepage={coloreclient}
+          islog={islog}
+          setIslog={setIslog}
+          id={id}
+          roleu={roleu}
+        />
       )}
 
       {/* <Header /> */}
@@ -47,18 +50,20 @@ function App() {
         <Route
           path="/join"
           element={
-            <Join setId={setId} setIslog={setIslog} setRoleuser={setRoleuser} />
+            <Join
+              setId={setId}
+              islog={islog}
+              setIslog={setIslog}
+              setRoleuser={setRoleuser}
+            />
           }
         />
         <Route path="/products" element={<Products />} />
-        <Route path="/cats" element={<Cats />} />
-        <Route path="/dogs" element={<Dogs />} />
-        <Route path="/fishs" element={<Fishs />} />
-        <Route path="/births" element={<Births />} />
+        <Route path="/products/:section" element={<ProductsPet />} />
         <Route path="/about" element={<About />} />
         <Route path="/contacts" element={<Contacts />} />
         <Route path="/dashbord" element={<Dashbord />} />
-        <Route path="/client" element={<CilentDashbord />} />
+        <Route path="/client/:username" element={<CilentDashbord id={id} />} />
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\UsersResource;
-use App\Models\Users;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 class UsersController extends Controller
 {
     public function index(){
-        $users = Users::get();
+        $users = User::get();
         if($users->count()>0){
             return UsersResource::collection($users);
         }else{
@@ -32,12 +32,13 @@ class UsersController extends Controller
                 'error'=> $validate->messages()
             ],422);    
         }
-        $users = Users::create([
+        $users = User::create([
             'name' => $request->name,
             'prenom' => $request->prenom,
             'username' => $request->username,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'password' => $request->password,
+            'role' => 'admin'
         ]);
         return response()->json(
             [
@@ -47,7 +48,7 @@ class UsersController extends Controller
         );
     }
     public function show($id){
-        $users = Users::find($id);
+        $users = User::find($id);
 
         if (!$users) {
             return response()->json([
@@ -96,7 +97,7 @@ class UsersController extends Controller
 public function update(Request $request, $id)
 {
     // البحث عن المستخدم
-    $user = Users::find($id);
+    $user = User::find($id);
 
     if (!$user) {
         return response()->json([
@@ -143,7 +144,7 @@ public function update(Request $request, $id)
 }
 
     public function destroy($id){
-        $user = Users::findOrfail($id);
+        $user = User::findOrfail($id);
         if($user){
             $user->delete();
             return response()->json(

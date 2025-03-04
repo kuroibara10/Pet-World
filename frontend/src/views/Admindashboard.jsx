@@ -3,6 +3,7 @@ import Users from "../components/Admin/Users";
 import Products from "../components/Admin/Products";
 import Messages from "../components/Admin/Messages";
 import Dashboard from "../components/Admin/Dashboard";
+import Demands from "../components/Admin/Demands";
 
 export default function AdminDashboard() {
   const [activeSection, setActiveSection] = useState("dashboard");
@@ -44,6 +45,14 @@ export default function AdminDashboard() {
             <li>
               <button
                 className="w-full text-left p-2 bg-gray-800 hover:bg-gray-700"
+                onClick={() => setActiveSection("demands")}
+              >
+                Demands
+              </button>
+            </li>
+            <li>
+              <button
+                className="w-full text-left p-2 bg-gray-800 hover:bg-gray-700"
                 onClick={() => setActiveSection("problems")}
               >
                 Problems
@@ -58,6 +67,7 @@ export default function AdminDashboard() {
         {activeSection === "dashboard" && <Dashboard />}
         {activeSection === "users" && <Users />}
         {activeSection === "products" && <Products />}
+        {activeSection === "demands" && <Demands />}
         {activeSection === "problems" && <Messages />}
       </main>
     </div>
