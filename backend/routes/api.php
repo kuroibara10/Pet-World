@@ -32,6 +32,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return response()->json($request->user());
 });
 
+Route::post('/userss/update-profile-image/{id}', [UsersController::class, 'updateProfileImage']);
+Route::post('/userss/update-password/{id}', [UsersController::class, 'updatePassword'])->middleware('auth');
 
 Route::get('/test', function () {
     return response()->json(['message' => 'API is working!']);

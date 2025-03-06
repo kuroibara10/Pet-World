@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import photo_welcom from "../assets/welcom.png";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
-function Home() {
+import closepng from "../assets/icons/close.png";
+function Home({ demands, setDemands, islog }) {
   const backgroundImageUrl = photo_welcom;
   let listPetAnimals = ["dogs", "cats", "birds", "fishes"];
   const [products, setProducts] = useState([]);
@@ -25,9 +25,102 @@ function Home() {
     };
     fetchProducts();
   }, []);
+  const [showDescProduct, setShowDescProduct] = useState(false);
+  const [productDec, setproductDec] = useState({});
+  const handDesc = (idProducthandl) => {
+    const product = products.data.find(
+      (product) => product.id === idProducthandl
+    );
+    setproductDec(product);
+    console.log(productDec);
+  };
+  const navigate = useNavigate();
+  const handlOrder = (idProducthandl) => {
+    if (islog) {
+      setDemands([]);
+      const product = products.data.find(
+        (product) => product.id === idProducthandl
+      );
+      setDemands([product]);
+      console.log("productDec");
+      console.log(product);
+      console.log("demands");
+      console.log(demands);
+      navigate("/payment", { state: { demands } });
+    } else {
+      alert("You need login");
+      navigate("/join");
+    }
+  };
+  const addproductCart = (product) => {
+    // if (!product) return; // Prevent adding undefined products
+    // setDemands((prevDemands) =>
+    //   Array.isArray(prevDemands) ? [...prevDemands, productDec] : [productDec]
+    // );
+    // alert(`Product : ${productDec.name} . Add to cart cart`);
+    if (islog) {
+      if (!product) return; // Prevent adding undefined products
+      setDemands((prevDemands) =>
+        Array.isArray(prevDemands) ? [...prevDemands, productDec] : [productDec]
+      );
+      alert(`Product : ${productDec.name} . Add to cart cart`);
+      // alert("add to cart cart");
+    } else {
+      alert("You need login");
+      navigate("/join");
+    }
+  };
 
   return (
     <div>
+      <div>
+        {showDescProduct && (
+          <div className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-[1000]">
+            <div className="bg-white p-5 rounded-lg w-[90%] max-w-[500px] relative">
+              <div>
+                <img
+                  src={closepng}
+                  alt="colse Desc Product"
+                  className="absolute top-[10px] right-[10px] w-[30px] h-[30px] cursor-pointer"
+                  onClick={() => {
+                    setShowDescProduct(false);
+                  }}
+                />
+              </div>
+              <div>
+                <div>
+                  Name : <p>{productDec.name}</p>
+                  Prix : <p>{productDec.prix}</p>
+                  Suitable : <p>{productDec.suitable}</p>
+                  Type : <p>{productDec.type}</p>
+                </div>
+                <div>
+                  <img
+                    src={`http://localhost:8000/storage/${productDec.image}`}
+                    // src={product.image}
+                    alt={productDec.name}
+                    className="w-full h-40 object-cover mb-2 rounded"
+                  />
+                </div>
+              </div>
+              <div>
+                <button
+                  onClick={addproductCart}
+                  className="mt-2 bg-blue-600 text-white px-4 py-2 rounded shadow"
+                >
+                  Add To Cart
+                </button>
+                <button
+                  className="mt-2 bg-blue-600 text-white px-4 py-2 rounded shadow"
+                  onClick={handlOrder}
+                >
+                  Order
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
       <section
         className="text-center py-30 bg-cover bg-center h-[35rem] mt-19 relative"
         style={{ backgroundImage: `url(${backgroundImageUrl})` }}
@@ -50,34 +143,6 @@ function Home() {
               {capitalizeFirstCharacter(section)}
             </h2>
             <div className="overflow-x-auto scrollbar-small bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow duration-300">
-              {/* <div className="flex space-x-4 w-max">
-                {products?.data
-                  ? products.data
-                      .filter((product) => product.suitable === section)
-                      .slice(0, 6)
-                      .map((product) => (
-                        <div
-                          key={product}
-                          className="bg-white p-4 shadow rounded text-center min-w-[250px]"
-                        >
-                          <img
-                            src={product.image}
-                            alt={`Product ${product.image}`}
-                            className="w-full h-40 object-cover mb-2 rounded"
-                          />
-                          <h3 className="text-lg font-semibold">
-                            Product {product.name}
-                          </h3>
-                          <p className="text-blue-600 font-bold">
-                            {product.prix}
-                          </p>
-                          <p className="text-blue-600 font-bold">
-                            {product.suitable}
-                          </p>
-                        </div>
-                      ))
-                  : "Loading"}
-              </div> */}
               <div className="overflow-x-auto scrollbar-hide">
                 <div className="flex space-x-6 w-max py-4">
                   {products?.data ? (
@@ -108,6 +173,23 @@ function Home() {
                           <p className="text-gray-500 text-sm mt-1">
                             {product.suitable}
                           </p>
+                          <button
+                            className="mt-2 bg-blue-600 text-white px-4 py-2 rounded shadow"
+                            onClick={() => {
+                              handDesc(product.id);
+                              setShowDescProduct(true);
+                            }}
+                          >
+                            Show
+                          </button>
+                          <button
+                            className="mt-2 bg-blue-600 text-white px-4 py-2 rounded shadow"
+                            onClick={() => {
+                              handlOrder(product.id);
+                            }}
+                          >
+                            Order
+                          </button>
                         </div>
                       ))
                   ) : (

@@ -3,8 +3,9 @@ import logo from "../assets/Pet_World.png";
 import logo2 from "../assets/Pet_World_Dark.png";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import cart from "../assets/icons/cart2.png";
 
-function Header({ colorepage, islog, setIslog, id, roleu }) {
+function Header({ colorepage, islog, setIslog, id, roleu, setShowcart }) {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -77,9 +78,18 @@ function Header({ colorepage, islog, setIslog, id, roleu }) {
           ))}
         </nav>
       </div>
-
       {islog ? (
         <div className="flex items-center">
+          <div>
+            <img
+              src={cart}
+              className="w-[30px] h-[30px] cursor-pointer mr-4"
+              alt="cart"
+              onClick={() => {
+                setShowcart(true);
+              }}
+            />
+          </div>
           {roleu === "admin" ? (
             <NavLink
               to="/admin"

@@ -4,6 +4,7 @@ import Settings from "../components/Clients/Settings";
 import Demands from "../components/Clients/Demands";
 // import { useParams } from "react-router-dom";
 import axios from "axios";
+import Change_Pass from "../components/Clients/Change_Pass";
 
 export default function CilentDashbord({ id }) {
   const [activeSection, setActiveSection] = useState("dashboard");
@@ -71,6 +72,14 @@ export default function CilentDashbord({ id }) {
                 Setting
               </button>
             </li>
+            <li>
+              <button
+                className="w-full text-left p-2 bg-gray-800 hover:bg-gray-700"
+                onClick={() => setActiveSection("change_password")}
+              >
+                Change Password
+              </button>
+            </li>
           </ul>
         </nav>
       </aside>
@@ -83,6 +92,9 @@ export default function CilentDashbord({ id }) {
         {activeSection === "demands" && <Demands userInfo={userInfo} />}
         {activeSection === "setting" && (
           <Settings userInfo={userInfo} setUserInfo={setUserInfo} />
+        )}
+        {activeSection === "change_password" && (
+          <Change_Pass userInfo={userInfo} setUserInfo={setUserInfo} />
         )}
       </main>
     </div>
